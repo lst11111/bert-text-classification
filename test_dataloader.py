@@ -4,8 +4,4 @@ import torch
 
 train_data ,test_data = create_data_loader()
 for i in train_data:
-    inputs, attention_mask, labels =i
-    print(inputs)
-    print(attention_mask)
-    print(labels)
-    continue
+    print(i["input_ids"], i["attention_mask"], i["label"])
