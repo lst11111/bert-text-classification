@@ -24,12 +24,12 @@ def train(model, train_loader, optimizer, epoch, device):
         attention_mask = batch['attention_mask'].to(device)
         labels = batch['labels'].to(device)  # [batch_size], 直接分类标签
 
-        optimizer.zero_grad()
-        logits = model(input_ids, attention_mask, model_type="bert_bilstm")  # [batch_size, num_labels]
+        optimizer.zero_grad()#清除模型参数的梯度
+        logits = model(input_ids, attention_mask, model_type="bert_attention")  # [batch_size, num_labels]
 
-        loss = loss_fn(logits, labels)
-        loss.backward()
-        optimizer.step()
+        loss = loss_fn(logits, labels)#计算损失
+        loss.backward()#反向传播，计算梯度
+        optimizer.step()#根据上面的梯度来用于更新模型参数的函数
 
         total_loss += loss.item()
 
@@ -61,7 +61,7 @@ def test(model, test_loader, device):
             attention_mask = batch['attention_mask'].to(device)
             labels = batch['labels'].to(device)  # [batch_size]
 
-            logits = model(input_ids, attention_mask, model_type="bert_bilstm")  # [batch_size, num_labels]
+            logits = model(input_ids, attention_mask, model_type="bert_attention")  # [batch_size, num_labels]
 
             loss = loss_fn(logits, labels)
             total_loss += loss.item()
@@ -82,7 +82,7 @@ def test(model, test_loader, device):
 def main():
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-    model = Model3(bert_model_name='bert-base-uncased', num_labels=4, model_type="bert_bilstm").to(device)
+    model = Model3(bert_model_name='bert-base-uncased', num_labels=4, model_type="bert_attention").to(device)
 
     train_loader, dev_loader, test_loader = create_data_loader()
 
