@@ -1,7 +1,7 @@
 import torch
 import torch.nn as nn
 from transformers import BertModel
-
+####
 class Model3(nn.Module):
     def __init__(self, bert_model_name='bert-base-uncased', num_labels=4, kernel_size=3, num_filters=256,model_type=None):
         super(Model3, self).__init__()
