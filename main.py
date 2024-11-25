@@ -9,6 +9,7 @@ from model import Model3
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 # 训练函数
+###
 def train(model, train_loader, optimizer, epoch, device):
     model.train()
     total_loss = 0
