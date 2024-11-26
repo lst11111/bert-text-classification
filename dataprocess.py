@@ -55,8 +55,8 @@ class TextDataset(Dataset):
 
 def create_data_loader():
     train_dataset = TextDataset("data/ag_news/train.csv", "bert-base-uncased", with_labels=True)
-    dev_dataset = TextDataset("data/ag_news/train.csv","bert-base-uncased",with_labels=True)
-    test_dataset = TextDataset("data/ag_news/train.csv","bert-base-uncased",with_labels=False)
+    dev_dataset = TextDataset("data/ag_news/dev.csv","bert-base-uncased",with_labels=True)
+    test_dataset = TextDataset("data/ag_news/test.csv","bert-base-uncased",with_labels=True)
     train_dataloader = DataLoader(train_dataset, batch_size=5, shuffle=True ,collate_fn=train_dataset.my_collate_fn)
     dev_dataloader = DataLoader(dev_dataset, batch_size=5, shuffle=False ,collate_fn=dev_dataset.my_collate_fn)
     test_dataloader = DataLoader(test_dataset, batch_size=5, shuffle=False ,collate_fn=test_dataset.my_collate_fn)
