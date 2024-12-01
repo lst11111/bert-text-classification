@@ -4,7 +4,7 @@ import torch
 from transformers import BertTokenizer
 import time
 def load_model(device, model_path):
-    myModel = Model3().to(device)#不确定这里是否需要写入模型类型
+    myModel = Model3(model_type = 'bert_bilstm').to(device)#不确定这里是否需要写入模型类型
     myModel.load_state_dict(torch.load(model_path, map_location=device))  # 加载到正确设备
     myModel.eval()
     return myModel
@@ -34,7 +34,7 @@ if __name__ == "__main__":
     start = time.time()
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
-    model = load_model(device, 'log/best_bert_attention2024-11-28-14-23model.pth')
+    model = load_model(device, 'log/best_bert_bilstm2024-11-28-14-02model.pth')
 
     texts = [
         ("Scientists discover new way to predict volcanic eruptions using AI models"),  # tech
@@ -53,7 +53,7 @@ if __name__ == "__main__":
     for text in texts:
         x = process_text(text, 'bert-base-uncased', device)
         with torch.no_grad():
-            pred = model(x[0],x[1],model_type="bert_attention")
+            pred = model(x[0],x[1],model_type="bert_bilstm")
         text_class_name(pred,text )
     end = time.time()
     print(f"耗时为：{end - start} s")
