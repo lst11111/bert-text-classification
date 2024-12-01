@@ -57,7 +57,7 @@ def train(model, train_loader, optimizer, epoch, device, swan_callback):
         pbar.set_postfix(loss=loss.item(), accuracy=accuracy)
 
         # 每个batch实时记录loss和准确率到SwanLab
-        swanlab.log({"train_loss": loss.item(), "train_accuracy": accuracy * 100})
+        #swanlab.log({"train_loss": loss.item(), "train_accuracy": accuracy * 100})
 
     avg_loss = total_loss / len(train_loader)
     accuracy = correct_predictions / total_samples
@@ -66,7 +66,7 @@ def train(model, train_loader, optimizer, epoch, device, swan_callback):
     logger.info(f"Train Accuracy (Epoch {epoch + 1}): {accuracy * 100:.2f}%")
 
     # 记录到SwanLab
-    #swanlab.log({"train_epoch_loss": avg_loss, "train_epoch_accuracy": accuracy * 100})
+    swanlab.log({"train_epoch_loss": avg_loss, "train_epoch_accuracy": accuracy * 100})
 
     return avg_loss, accuracy  # 返回当前epoch的loss和accuracy
 
@@ -99,7 +99,7 @@ def dev(model, dev_loader, device, swan_callback):
 
             # 每个batch实时记录loss和准确率到SwanLab
             accuracy = correct_predictions / total_samples
-            swanlab.log({"val_loss": loss.item(), "val_accuracy": accuracy * 100})
+            #swanlab.log({"val_loss": loss.item(), "val_accuracy": accuracy * 100})
 
     avg_loss = total_loss / len(dev_loader)  # 计算平均损失
     accuracy = correct_predictions / total_samples  # 计算准确率
@@ -108,7 +108,7 @@ def dev(model, dev_loader, device, swan_callback):
     logger.info(f"Validation Accuracy: {accuracy * 100:.2f}%")  # 输出验证准确率
 
     # 记录到SwanLab（每个epoch的最终结果）
-    #swanlab.log({"val_epoch_loss": avg_loss, "val_epoch_accuracy": accuracy * 100})
+    swanlab.log({"val_epoch_loss": avg_loss, "val_epoch_accuracy": accuracy * 100})
 
     return avg_loss, accuracy  # 返回验证结果
 
@@ -141,7 +141,7 @@ def test(model, test_loader, device):
 
             # 每个batch实时记录loss和准确率到SwanLab
             accuracy = correct_predictions / total_samples
-            swanlab.log({"test_loss": loss.item(), "test_accuracy": accuracy * 100})
+            #swanlab.log({"test_loss": loss.item(), "test_accuracy": accuracy * 100})
 
     avg_loss = total_loss / len(test_loader)
     accuracy = correct_predictions / total_samples
@@ -150,7 +150,7 @@ def test(model, test_loader, device):
     logger.info(f"Test Accuracy: {accuracy * 100:.2f}%")
 
     # 记录到SwanLab
-    #swanlab.log({"test_epoch_loss": avg_loss, "test_epoch_accuracy": accuracy * 100})
+    swanlab.log({"test_epoch_loss": avg_loss, "test_epoch_accuracy": accuracy * 100})
 
 
 def main():
@@ -164,7 +164,7 @@ def main():
 
     optimizer = torch.optim.Adam(model.parameters(), lr=1e-5)
 
-    epochs = 3
+    epochs = 10
     best_val_accuracy = 0  # 用于保存最优验证准确度
     best_model_state_dict = None  # 用于保存最优模型参数
 
